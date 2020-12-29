@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import { EventCard, Job } from './components/EventCard';
+import FilterSelect from './components/FilterSelect';
+import EventProvider from './hooks/EventProvider';
 
 const eventData = {
   eventTitle: "Security Guard",
@@ -13,7 +15,12 @@ const eventData = {
 
 function App() {
   return (
-      <EventCard event={eventData}></EventCard>
+      <div>
+        <EventProvider>
+        <FilterSelect></FilterSelect>
+        <EventCard event={eventData}></EventCard>
+        </EventProvider>
+      </div>
   );
 }
 
