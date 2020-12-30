@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import { EventCard, Job } from './components/EventCard';
 import FilterSelect from './components/FilterSelect';
 import EventProvider from './hooks/EventProvider';
+import { EventFeed } from './components/EventFeed';
 
 const eventData = {
   eventTitle: "Security Guard",
@@ -17,8 +18,7 @@ function App() {
   return (
       <div>
         <EventProvider>
-        <FilterSelect></FilterSelect>
-        <EventCard event={eventData}></EventCard>
+        <EventFeed/>
         </EventProvider>
       </div>
   );

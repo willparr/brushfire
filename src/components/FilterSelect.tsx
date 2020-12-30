@@ -1,5 +1,6 @@
 import { createStyles, FormControl, InputLabel, makeStyles, MenuItem, Select, Theme } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useFilter } from '../hooks/useFilter';
 import { Job } from './EventCard';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,9 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 function FilterSelect() {
     const classes = useStyles();
-    const [jobFilter, setJobFilter] = useState<Job | undefined>();
+    const {setJobFilter, jobFilter} = useFilter()
 
   const handleChange = (event: React.ChangeEvent<{ value?: Job | unknown }>) => {
+    // setJobFilterDisplay(event.target.value as Job);
     setJobFilter(event.target.value as Job);
   };
 
