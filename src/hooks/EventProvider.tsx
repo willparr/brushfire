@@ -54,9 +54,8 @@ function generateMockData(){
     for(let i = 0; i < 6; i++){
         const randomNum = Math.floor(Math.random() * Math.floor(5))
         const eventData = jobArray[randomNum]
-        mockData[eventData.id] = {...eventData}
+        mockData[eventData.id + i] = {...eventData}
     }
-    console.log(mockData)
     return mockData
 }
 
@@ -75,8 +74,9 @@ interface VolunteerEvent {
     eventDate: Date
     eventLocation: string
     id: string
-    pay: number;
+    pay: number
     jobType: Job
+    isFavorite?: boolean
 }
 
 interface Cache {
@@ -100,7 +100,12 @@ function EventProvider(props: { children: React.ReactNode; }) {
     }
 
     function handleSetEvents(event: VolunteerEvent){
+        console.log(event)
+        console.log('cache')
+        console.log(cache)
         const nextCache: Cache = set(cache, event.id, event)
+        console.log('next cache')
+        console.log(nextCache) 
         setCache({...nextCache})
     }
 

@@ -38,8 +38,8 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
     },
     formControl: {
-        margin: 10,
-        minWidth: 300,
+        margin: theme.spacing(1),
+        minWidth: 120,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -59,40 +59,13 @@ interface VolunteerEvent {
 }
 
 
-export function EventFeed() {
+export function UserFavorites() {
   const {cache} = useCache()
   const classes = useStyles();
-  const [jobFilter, setJobFilter] = useState<JobFilter | undefined>()
-
-  const handleChange = (event: React.ChangeEvent<{ value?: JobFilter | unknown }>) => {
-    setJobFilter(event.target.value as JobFilter);
-  };
   const events = values(cache)
 
   return (
-    <div>
-    <div style={{
-        display:'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-    <FormControl className={classes.formControl}>
-      <InputLabel id="demo-simple-select-label">Job Type</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={jobFilter}
-        onChange={handleChange}
-      >
-        <MenuItem value={"All"}>All</MenuItem>
-        <MenuItem value={"Security"}>Security</MenuItem>
-        <MenuItem value={"Ticketing"}>Ticketing</MenuItem>
-        <MenuItem value={"Cleaning"}>Cleaning</MenuItem>
-        <MenuItem value={"Vendor"}>Vendor</MenuItem>
-      </Select>
-    </FormControl>
-    </div>
+      <div>
       <div style={{
         display:'flex',
         flexDirection: 'column',
@@ -101,12 +74,12 @@ export function EventFeed() {
       }}>
           {events.map((event) => {
               const convertedEvent = {...event} as any
-              if(!event || (convertedEvent.jobType !== jobFilter && !!jobFilter && jobFilter !== "All")){
+              if(!event || (!convertedEvent.isFavorite)){
                 // eslint-disable-next-line array-callback-return
                 return
               }
               return(
-                  <EventCard showSaveButton event={convertedEvent as VolunteerEvent}/>
+                  <EventCard event={convertedEvent as VolunteerEvent}/>
               )
           })}
       </div>

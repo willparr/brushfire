@@ -3,10 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import { IntlProvider } from 'react-intl';
+import { LocalizationProvider } from './hooks/LocalizationProvider';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+    <LocalizationProvider>
+      <App />
+    </LocalizationProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

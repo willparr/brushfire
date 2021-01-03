@@ -4,12 +4,16 @@ import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, createSt
 import { EventDetailView } from './EventDetailView';
 import { useCache } from '../hooks/EventProvider';
 import { lollaImage } from '../mockData/images';
+import { FormattedDate } from 'react-intl';
+import { useLocale } from '../hooks/LocalizationProvider';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
       display: 'flex',
-      maxWidth: 600
+      minWidth: 900,
+      maxWidth: 1000,
+      margin: 10
     },
     header: {
      margin: 0
@@ -46,15 +50,23 @@ interface VolunteerEvent {
   id: string
   pay: number;
   jobType: Job
+  isFavorite?: boolean
 }
 
 interface EventCardProps {
   event: VolunteerEvent
+  showSaveButton?: boolean
 }
 
-export function EventCard({event}: EventCardProps) {
+export function EventCard({event, showSaveButton}: EventCardProps) {
   const {eventTitle, eventDate, eventLocation, id, pay, jobType} = event
   const classes = useStyles();
+  const {setCache} = useCache()
+  const saveEvent = () => {
+    event.isFavorite = true; //this isn't the best because it's modifying by reference, would be better to update event by id
+    setCache(event)
+  }
+
   return (
     <Card variant="outlined" className={classes.card}>
       <CardContent className={classes.eventDetails}>
@@ -65,15 +77,14 @@ export function EventCard({event}: EventCardProps) {
         {eventLocation}
       </Typography>
       <Typography>
-        {"Event Date: " + eventDate.toLocaleString()}
+        Event Date: <FormattedDate value={eventDate}></FormattedDate>
       </Typography>
       <Typography>
         {"Job Type: " + jobType}
       </Typography>
       <CardActions>
       <EventDetailView event={event}/>
-      <Button color="primary" variant="outlined" title="Details">Details</Button>
-      <Button color="primary" variant="outlined" title="Save">Save</Button>
+      {showSaveButton && <Button color="primary" onClick={saveEvent} variant="outlined" title="Save">Save</Button>}
       </CardActions>
       </CardContent>
       <CardContent className={classes.eventDetails}>

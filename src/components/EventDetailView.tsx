@@ -11,6 +11,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Job } from './EventCard';
+import { FormattedDate, FormattedNumber } from 'react-intl';
+import { useLocale } from '../hooks/LocalizationProvider';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -43,6 +45,8 @@ export function EventDetailView({event}: EventDetailViewProps) {
   const {eventTitle, eventDate, eventLocation, id, pay, jobType} = event
   const [open, setOpen] = React.useState(false);
 
+  const {getCurrency} = useLocale()
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -56,8 +60,8 @@ export function EventDetailView({event}: EventDetailViewProps) {
         Details
       </Button>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title">
-          {eventTitle} | {eventDate.toDateString()}
+        <DialogTitle id="customized-dialog-title">          
+          {eventTitle} | <FormattedDate value={eventDate}></FormattedDate>
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
@@ -74,8 +78,8 @@ export function EventDetailView({event}: EventDetailViewProps) {
         </DialogContent>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Pay Rate: {pay}
-          </Typography>
+            Pay Rate: <FormattedNumber style="currency" value={pay} currency={getCurrency()}/> 
+          </Typography>  
           <Typography gutterBottom>
             Job Type: {jobType}
           </Typography>
