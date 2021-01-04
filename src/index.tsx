@@ -12,9 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
     <LocalizationProvider>
-    <Route exact path="/">
       <App />
-    </Route>  
     </LocalizationProvider>
     </BrowserRouter>
   </React.StrictMode>,
