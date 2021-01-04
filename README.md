@@ -1,3 +1,7 @@
+:exclamation::exclamation::exclamation: NOTE :exclamation::exclamation::exclamation:
+This app uses test data and generates a random number of events. It does not persist the state and also has duplicate titles. However, each
+event id is unique. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
